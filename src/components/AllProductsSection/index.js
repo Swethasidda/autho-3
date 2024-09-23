@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie'
 
+import Loader from 'react-loader-spinner'
+
 import {Component} from 'react'
 
 import ProductCard from '../ProductCard'
@@ -8,6 +10,7 @@ import './index.css'
 class AllProductsSection extends Component {
   state = {
     productsList: [],
+    isLoading: true,
   }
 
   componentDidMount() {
@@ -36,6 +39,7 @@ class AllProductsSection extends Component {
       }))
       this.setState({
         productsList: updatedData,
+        isLoading: false,
       })
     }
   }
@@ -55,7 +59,22 @@ class AllProductsSection extends Component {
   }
 
   render() {
-    return <>{this.renderProductsList()}</>
+    const {isLoading} = this.state
+    return (
+      <div>
+        {isLoading ? (
+          <Loader
+            type="TailSpin"
+            color="#00BFFF"
+            height={50}
+            width={50}
+            className="class-loader"
+          />
+        ) : (
+          this.renderProductsList()
+        )}
+      </div>
+    )
   }
 }
 
